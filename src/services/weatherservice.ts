@@ -9,6 +9,7 @@ export const weatherServices = {
     return res.data;
   },
 
+  
   getForecastByCity: async (city: string): Promise<any[]> => {
     const res = await apiClient.get(
       `/forecast?q=${city}&appid=${API_KEY}&units=metric`
