@@ -5,6 +5,7 @@ import { weatherServices } from "@/services/weatherservice";
 import { useEffect, useState } from "react";
 import { X, Star } from "lucide-react";
 
+
 export default function Home() {
   const [searchedWeathers, setSearchedWeathers] = useState<any[]>([]);
   const [errorMessage, setErrorMessage] = useState<string>("");
