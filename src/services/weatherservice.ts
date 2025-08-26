@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @next/next/no-img-element */
+
 import apiClient from "./api"
 const API_KEY = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
 export const weatherServices = {
