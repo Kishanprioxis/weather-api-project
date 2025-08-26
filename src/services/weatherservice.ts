@@ -1,0 +1,36 @@
+import apiClient from "./api"
+const API_KEY = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
+export const weatherServices = {
+  getWeatherByCity: async (city: string): Promise<any> => {
+    const res = await apiClient.get(
+      `/weather?q=${city}&appid=${API_KEY}&units=metric`
+    );
+    return res.data;
+  },
+
+  getForecastByCity: async (city: string): Promise<any[]> => {
+    const res = await apiClient.get(
+      `/forecast?q=${city}&appid=${API_KEY}&units=metric`
+    );
+
+    const forecastData = res.data;
+    const dailyForecast: any[] = [];
+    const processedDates = new Set();
+
+    forecastData.list.forEach((entry: any) => {
+      const date = entry.dt_txt.split(" ")[0];
+      if (!processedDates.has(date)) {
+        processedDates.add(date);
+        dailyForecast.push({
+          date,
+          temp: Math.round(entry.main.temp),
+          weather: entry.weather[0].main,
+          description: entry.weather[0].description,
+          icon: entry.weather[0].icon,
+        });
+      }
+    });
+
+    return dailyForecast;
+  }
+};
