@@ -1,6 +1,7 @@
 import apiClient from "./api"
 const API_KEY = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
 export const weatherServices = {
+  
   getWeatherByCity: async (city: string): Promise<any> => {
     const res = await apiClient.get(
       `/weather?q=${city}&appid=${API_KEY}&units=metric`
