@@ -9,6 +9,7 @@ export const weatherServices = {
     const res = await apiClient.get(
       `/weather?q=${city}&appid=${API_KEY}&units=metric`
     );
+    console.log(res)
     return res.data;
   },
 
@@ -21,10 +22,11 @@ export const weatherServices = {
     const dailyForecast: any[] = [];
     const processedDates = new Set();
     const today = new Date().toISOString().split("T")[0];
-
+    console.log(forecastData)
     forecastData.list.forEach((entry: any) => {
       const date = entry.dt_txt.split(" ")[0];
       if (!processedDates.has(date) && date !== today) {
+        console.log(entry)
         processedDates.add(date);
         dailyForecast.push({
           date: date,
@@ -35,7 +37,6 @@ export const weatherServices = {
         });
       }
     });
-
     return dailyForecast;
   },
 };
