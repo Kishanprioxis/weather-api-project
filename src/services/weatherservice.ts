@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-img-element */
 
-import apiClient from "./api"
+import apiClient from "./api";
 const API_KEY = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
+
 export const weatherServices = {
-  
   getWeatherByCity: async (city: string): Promise<any> => {
     const res = await apiClient.get(
       `/weather?q=${city}&appid=${API_KEY}&units=metric`
@@ -12,7 +12,6 @@ export const weatherServices = {
     return res.data;
   },
 
-  
   getForecastByCity: async (city: string): Promise<any[]> => {
     const res = await apiClient.get(
       `/forecast?q=${city}&appid=${API_KEY}&units=metric`
@@ -21,13 +20,14 @@ export const weatherServices = {
     const forecastData = res.data;
     const dailyForecast: any[] = [];
     const processedDates = new Set();
+    const today = new Date().toISOString().split("T")[0];
 
     forecastData.list.forEach((entry: any) => {
       const date = entry.dt_txt.split(" ")[0];
-      if (!processedDates.has(date)) {
+      if (!processedDates.has(date) && date !== today) {
         processedDates.add(date);
         dailyForecast.push({
-          date,
+          date: date,
           temp: Math.round(entry.main.temp),
           weather: entry.weather[0].main,
           description: entry.weather[0].description,
@@ -37,5 +37,5 @@ export const weatherServices = {
     });
 
     return dailyForecast;
-  }
+  },
 };
